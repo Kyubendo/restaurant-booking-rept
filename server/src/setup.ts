@@ -35,10 +35,10 @@ export const database = () => {
         `create table if not exists "user"
          (
              id       serial primary key,
-             phone    varchar(12) not null,
-             name     text        not null,
-             password text        not null,
-             role     user_role   not null
+             phone    varchar(12) unique not null,
+             name     text               not null,
+             password text               not null,
+             role     user_role          not null
          );
 
         create table if not exists "table"

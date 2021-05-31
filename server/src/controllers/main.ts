@@ -26,6 +26,29 @@ export const emptyTables = async (req: GetReq<FilterOptions>, res: Response) => 
     res.send(response)
 }
 
-export const qweqwe = async (req: Request, res: Response) => {
+export const registration = async (req: Request, res: Response) => {
+    await db.query(
+        `insert into "user" (phone, name, password, role)
+         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'client')`
+    );
+    res.send({token: 'test123'});
+}
 
+export const registrationAdmin = async (req: Request, res: Response) => {
+    if (req.query.secret !== 'secret') {
+        res.statusCode = 403
+        return
+    }
+    await db.query(
+        `insert into "user" (phone, name, password, role)
+         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'admin')`
+    );
+    res.send({token: 'adminTest123'});
+}
+
+export const makeRequest = async (req: Request, res: Response) => {
+    await db.query(
+        `insert into request(user_id, table_id, time, status)
+         values ('', '${req.query.tableId}', '${req.query.time}', 'pending')`
+    )
 }

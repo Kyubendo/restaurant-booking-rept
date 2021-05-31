@@ -6,9 +6,9 @@ import mainRoutes from "./routes/main";
 const app = express()
 
 setup.database()
-
 app.use('/', mainRoutes)
 
+app.set('view engine', 'hbs');
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
