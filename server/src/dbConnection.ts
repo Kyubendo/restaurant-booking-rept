@@ -2,7 +2,7 @@ import {Pool} from "pg";
 
 let pool: Pool | null = null;
 
-const connect=():Pool =>{
+const connect = (): Pool => {
     return new Pool({
         user: 'postgres',
         host: 'db',
@@ -12,7 +12,7 @@ const connect=():Pool =>{
     })
 }
 
-export const getConnection=():Pool=> {
+export const getConnection = (): Pool => {
     console.log(pool)
     if (!pool) pool = connect();
     return pool;

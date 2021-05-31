@@ -1,13 +1,10 @@
 import express from 'express'
 import {getConnection} from "../dbConnection";
+import * as requests from './../controllers/main'
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    let a = getConnection()
-
-    res.send((await a.query('select now()')).rows)
-})
+router.get('/tables', requests.emptyTables)
 
 
 export default router

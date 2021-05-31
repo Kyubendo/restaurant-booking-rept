@@ -1,13 +1,13 @@
 import express from 'express'
 import cors from 'cors'
 import * as setup from "./setup";
-import registrationRoutes from "./routes/registration";
+import mainRoutes from "./routes/main";
 
 const app = express()
 
 setup.database()
 
-app.use('/registration', registrationRoutes)
+app.use('/', mainRoutes)
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

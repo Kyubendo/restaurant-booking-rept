@@ -53,7 +53,7 @@ export const database = () => {
             id       serial primary key,
             user_id  int references "user" (id)  not null,
             table_id int references "table" (id) not null,
-            time     time                        not null,
+            time     timestamp                   not null,
             status   request_status              not null
         );`
     )
