@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="restaurant_booking@localhost">
-  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.20">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.21">
     <root id="1">
       <ServerVersion>13.3</ServerVersion>
+      <Grants>1||-9223372036854775808|c|G
+1||10|c|G
+1||10|C|G
+1||10|T|G
+13441||-9223372036854775808|c|G
+13441||10|c|G
+13441||10|C|G
+13441||10|T|G</Grants>
       <DateStyle>mdy</DateStyle>
       <TimeZones>true ACDT
 true ACSST
@@ -785,21 +793,31 @@ false Z
 false Zulu
 true posixrules
 </TimeZones>
-      <StartupTime>1622483195</StartupTime>
+      <StartupTime>1622532078</StartupTime>
     </root>
     <database id="2" parent="1" name="postgres">
-      <ObjectId>13395</ObjectId>
+      <ObjectId>13442</ObjectId>
       <Comment>default administrative connection database</Comment>
       <Owner>postgres</Owner>
     </database>
     <database id="3" parent="1" name="restaurant_booking">
       <ObjectId>16384</ObjectId>
+      <Grants>11||10|C|G
+11||-9223372036854775808|U|G
+11||10|U|G
+2200||-9223372036854775808|C|G
+2200||10|C|G
+2200||-9223372036854775808|U|G
+2200||10|U|G
+13158||10|C|G
+13158||-9223372036854775808|U|G
+13158||10|U|G</Grants>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>583</IntrospectionStateNumber>
+      <IntrospectionStateNumber>548</IntrospectionStateNumber>
       <Current>1</Current>
-      <Relations>sequence|table|24577|24579|1
-sequence|table|24588|24590|1
-sequence|table|24596|24598|1
+      <Relations>sequence|table|24638|24640|1
+sequence|table|24651|24653|1
+sequence|table|24659|24661|1
 </Relations>
     </database>
     <role id="4" parent="1" name="pg_execute_server_program">
@@ -807,6 +825,9 @@ sequence|table|24596|24598|1
     </role>
     <role id="5" parent="1" name="pg_monitor">
       <ObjectId>3373</ObjectId>
+      <RoleGrants>3374
+3375
+3377</RoleGrants>
     </role>
     <role id="6" parent="1" name="pg_read_all_settings">
       <ObjectId>3374</ObjectId>
@@ -846,35 +867,26 @@ sequence|table|24596|24598|1
       <StateNumber>1</StateNumber>
     </tablespace>
     <schema id="15" parent="3" name="information_schema">
-      <ObjectId>13111</ObjectId>
-      <Acl>10=UC/10
-U/10
-</Acl>
+      <ObjectId>13158</ObjectId>
       <StateNumber>293</StateNumber>
       <Owner>postgres</Owner>
     </schema>
     <schema id="16" parent="3" name="pg_catalog">
       <ObjectId>11</ObjectId>
       <Comment>system catalog schema</Comment>
-      <Acl>10=UC/10
-U/10
-</Acl>
       <StateNumber>286</StateNumber>
       <Owner>postgres</Owner>
     </schema>
     <schema id="17" parent="3" name="public">
       <ObjectId>2200</ObjectId>
       <Comment>standard public schema</Comment>
-      <Acl>10=UC/10
-UC/10
-</Acl>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>584</IntrospectionStateNumber>
+      <IntrospectionStateNumber>549</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <extension id="18" parent="3" name="plpgsql">
-      <ObjectId>13381</ObjectId>
+      <ObjectId>13428</ObjectId>
       <Comment>PL/pgSQL procedural language</Comment>
       <StateNumber>439</StateNumber>
       <Version>1.0</Version>
@@ -896,7 +908,7 @@ UC/10
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
     <language id="21" parent="3" name="plpgsql">
-      <ObjectId>13385</ObjectId>
+      <ObjectId>13432</ObjectId>
       <Comment>PL/pgSQL procedural language</Comment>
       <StateNumber>439</StateNumber>
       <Trusted>1</Trusted>
@@ -971,27 +983,27 @@ UC/10
       <Type>index</Type>
     </access-method>
     <sequence id="30" parent="17" name="request_id_seq">
-      <ObjectId>24596</ObjectId>
+      <ObjectId>24659</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
     <sequence id="31" parent="17" name="table_id_seq">
-      <ObjectId>24588</ObjectId>
+      <ObjectId>24651</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
     <sequence id="32" parent="17" name="user_id_seq">
-      <ObjectId>24577</ObjectId>
+      <ObjectId>24638</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
     <object-type id="33" parent="17" name="table_zone">
-      <ObjectId>16433</ObjectId>
+      <ObjectId>16386</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>529</StateNumber>
+      <StateNumber>492</StateNumber>
       <SubKind>enum</SubKind>
       <Labels>common
 children
@@ -999,9 +1011,9 @@ smoking</Labels>
       <SubCategory>enum</SubCategory>
     </object-type>
     <object-type id="34" parent="17" name="request_status">
-      <ObjectId>16442</ObjectId>
+      <ObjectId>16394</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>531</StateNumber>
+      <StateNumber>493</StateNumber>
       <SubKind>enum</SubKind>
       <Labels>pending
 processing
@@ -1010,34 +1022,34 @@ rejected</Labels>
       <SubCategory>enum</SubCategory>
     </object-type>
     <object-type id="35" parent="17" name="user_role">
-      <ObjectId>16487</ObjectId>
+      <ObjectId>16404</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>538</StateNumber>
+      <StateNumber>494</StateNumber>
       <SubKind>enum</SubKind>
       <Labels>client
 admin</Labels>
       <SubCategory>enum</SubCategory>
     </object-type>
     <table id="36" parent="17" name="request">
-      <ObjectId>24598</ObjectId>
+      <ObjectId>24661</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
     </table>
     <table id="37" parent="17" name="table">
-      <ObjectId>24590</ObjectId>
+      <ObjectId>24653</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
     </table>
     <table id="38" parent="17" name="user">
-      <ObjectId>24579</ObjectId>
+      <ObjectId>24640</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
     </table>
     <column id="39" parent="36" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <DefaultExpression>nextval(&apos;request_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
@@ -1045,33 +1057,33 @@ admin</Labels>
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="41" parent="36" name="table_id">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="42" parent="36" name="time">
       <Position>4</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <TypeId>1114</TypeId>
     </column>
     <column id="43" parent="36" name="status">
       <Position>5</Position>
       <DataType>request_status|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
-      <TypeId>16442</TypeId>
+      <StateNumber>547</StateNumber>
+      <TypeId>16394</TypeId>
     </column>
     <index id="44" parent="36" name="request_pkey">
-      <ObjectId>24602</ObjectId>
-      <StateNumber>582</StateNumber>
+      <ObjectId>24665</ObjectId>
+      <StateNumber>547</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
@@ -1080,27 +1092,27 @@ admin</Labels>
       <ClassIds>1978</ClassIds>
     </index>
     <key id="45" parent="36" name="request_pkey">
-      <ObjectId>24603</ObjectId>
-      <StateNumber>582</StateNumber>
+      <ObjectId>24666</ObjectId>
+      <StateNumber>547</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>request_pkey</UnderlyingIndexName>
     </key>
     <foreign-key id="46" parent="36" name="request_user_id_fkey">
-      <ObjectId>24604</ObjectId>
-      <StateNumber>582</StateNumber>
+      <ObjectId>24667</ObjectId>
+      <StateNumber>547</StateNumber>
       <ColNames>user_id</ColNames>
-      <RefTableId>24579</RefTableId>
+      <RefTableId>24640</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>user</RefTableName>
       <RefKeyName>user_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
     <foreign-key id="47" parent="36" name="request_table_id_fkey">
-      <ObjectId>24609</ObjectId>
-      <StateNumber>582</StateNumber>
+      <ObjectId>24672</ObjectId>
+      <StateNumber>547</StateNumber>
       <ColNames>table_id</ColNames>
-      <RefTableId>24590</RefTableId>
+      <RefTableId>24653</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>table</RefTableName>
       <RefKeyName>table_pkey</RefKeyName>
@@ -1110,7 +1122,7 @@ admin</Labels>
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <DefaultExpression>nextval(&apos;table_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
@@ -1118,19 +1130,19 @@ admin</Labels>
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <column id="50" parent="37" name="zone">
       <Position>3</Position>
       <DataType>table_zone|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
-      <TypeId>16433</TypeId>
+      <StateNumber>547</StateNumber>
+      <TypeId>16386</TypeId>
     </column>
     <index id="51" parent="37" name="table_pkey">
-      <ObjectId>24594</ObjectId>
-      <StateNumber>582</StateNumber>
+      <ObjectId>24657</ObjectId>
+      <StateNumber>547</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
@@ -1139,8 +1151,8 @@ admin</Labels>
       <ClassIds>1978</ClassIds>
     </index>
     <key id="52" parent="37" name="table_pkey">
-      <ObjectId>24595</ObjectId>
-      <StateNumber>582</StateNumber>
+      <ObjectId>24658</ObjectId>
+      <StateNumber>547</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>table_pkey</UnderlyingIndexName>
@@ -1149,7 +1161,7 @@ admin</Labels>
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <DefaultExpression>nextval(&apos;user_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
@@ -1157,33 +1169,40 @@ admin</Labels>
       <Position>2</Position>
       <DataType>varchar(12)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="55" parent="38" name="name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <TypeId>25</TypeId>
     </column>
     <column id="56" parent="38" name="password">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
+      <StateNumber>547</StateNumber>
       <TypeId>25</TypeId>
     </column>
     <column id="57" parent="38" name="role">
       <Position>5</Position>
       <DataType>user_role|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>582</StateNumber>
-      <TypeId>16487</TypeId>
+      <StateNumber>547</StateNumber>
+      <TypeId>16404</TypeId>
     </column>
-    <index id="58" parent="38" name="user_pkey">
-      <ObjectId>24586</ObjectId>
-      <StateNumber>582</StateNumber>
+    <column id="58" parent="38" name="token">
+      <Position>6</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>547</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="59" parent="38" name="user_pkey">
+      <ObjectId>24647</ObjectId>
+      <StateNumber>547</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
@@ -1191,12 +1210,28 @@ admin</Labels>
       <CollationIds>0</CollationIds>
       <ClassIds>1978</ClassIds>
     </index>
-    <key id="59" parent="38" name="user_pkey">
-      <ObjectId>24587</ObjectId>
-      <StateNumber>582</StateNumber>
+    <index id="60" parent="38" name="user_phone_key">
+      <ObjectId>24649</ObjectId>
+      <StateNumber>547</StateNumber>
+      <ColNames>phone</ColNames>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>100</CollationIds>
+      <CollationNames>default</CollationNames>
+      <ClassIds>3126</ClassIds>
+    </index>
+    <key id="61" parent="38" name="user_pkey">
+      <ObjectId>24648</ObjectId>
+      <StateNumber>547</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>user_pkey</UnderlyingIndexName>
+    </key>
+    <key id="62" parent="38" name="user_phone_key">
+      <ObjectId>24650</ObjectId>
+      <StateNumber>547</StateNumber>
+      <ColNames>phone</ColNames>
+      <UnderlyingIndexName>user_phone_key</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

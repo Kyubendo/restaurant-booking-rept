@@ -38,7 +38,8 @@ export const database = () => {
              phone    varchar(12) unique not null,
              name     text               not null,
              password text               not null,
-             role     user_role          not null
+             role     user_role          not null,
+             token    text               not null
          );
 
         create table if not exists "table"

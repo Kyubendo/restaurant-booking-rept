@@ -1,10 +1,13 @@
 import {getConnection} from "../dbConnection";
 import {Response, Request} from "express";
 import {FilterOptions} from "../types/types";
+import * as crypto from 'crypto'
 
 type GetReq<T> = Request<{}, {}, {}, T>
 
 const db = getConnection()
+
+const createToken = (value: string) => crypto.createHash('sha1').update(value).digest('hex');
 
 export const registrationForm = async (req: Request, res: Response) => {
     let a = getConnection()
@@ -27,23 +30,35 @@ export const emptyTables = async (req: GetReq<FilterOptions>, res: Response) => 
 }
 
 export const registration = async (req: Request, res: Response) => {
+    const token = createToken(`${req.query.phone}${req.query.password}`)
     await db.query(
-        `insert into "user" (phone, name, password, role)
-         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'client')`
+        `insert into "user" (phone, name, password, role, token)
+         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'client', '${token}')`
     );
-    res.send({token: 'test123'});
+    res.send({token})
 }
+
+export const login = async (req: Request, res: Response) => {
+    const token = (await db.query(
+        `select token
+         from "user"
+         where phone = '${req.query.phone}'
+           and password = '${req.query.password}'`)).rows[0].token
+    res.send({token})
+}
+
 
 export const registrationAdmin = async (req: Request, res: Response) => {
     if (req.query.secret !== 'secret') {
         res.statusCode = 403
         return
     }
+    const token = createToken(`${req.query.phone}${req.query.password}`)
     await db.query(
-        `insert into "user" (phone, name, password, role)
-         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'admin')`
+        `insert into "user" (phone, name, password, role, token)
+         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'admin', '${token}')`
     );
-    res.send({token: 'adminTest123'});
+    res.send({token})
 }
 
 export const makeRequest = async (req: Request, res: Response) => {
