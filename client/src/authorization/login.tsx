@@ -9,13 +9,12 @@ export const Login: React.FC<{
 }> = ({token, setToken}) => {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
-    // const [token, setToken] = useToken()
-    console.log(token)
+
     if (token) return <Redirect to={'/'}/>
     return (
         <form onSubmit={e => {
             e.preventDefault()
-            axios.get('http://localhost:3000/login', {params: {phone, password}})
+            axios.get('http://localhost:3001/login', {params: {phone, password}})
                 .then(({data}) => setToken(data.token))
         }}>
             <label>

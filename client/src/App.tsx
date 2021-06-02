@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import {Registration} from "./forms/registration";
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {Dashboard} from "./forms/dashboard";
+import {Registration} from "./authorization/registration";
+import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import {Dashboard} from "./authorization/dashboard";
 import {useToken} from "./hooks/useToken";
-import {Login} from "./forms/login";
-
+import {Login} from "./authorization/login";
+import {Tables} from "./tables/tables";
 
 export const App: React.FC<{}> = () => {
     const [token, setToken] = useToken()
@@ -25,11 +25,14 @@ export const App: React.FC<{}> = () => {
         <h1>kek</h1>
         <BrowserRouter>
             <Switch>
+                <Route path={'/tables'}>
+                    <Tables/>
+                </Route>
                 <Route path={'/'}>
                     <Dashboard/>
                 </Route>
             </Switch>
+            <Link onClick={() => setToken('')} to={'/'}>Выйти</Link>
         </BrowserRouter>
-        <a onClick={() => setToken('')}>Выйти</a>
     </div>
 }

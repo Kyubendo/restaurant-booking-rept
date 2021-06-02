@@ -7,3 +7,10 @@ export type FilterOptions = {
     time: string,
     zone?: zone,
 }
+
+export type Table = {
+    id: number,
+    chair_count: number,
+    zone: zone,
+    reserved_time: string,
+}

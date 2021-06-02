@@ -13,7 +13,6 @@ const connect = (): Pool => {
 }
 
 export const getConnection = (): Pool => {
-    console.log(pool)
     if (!pool) pool = connect();
     return pool;
 }

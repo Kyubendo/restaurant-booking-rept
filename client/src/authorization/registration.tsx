@@ -18,7 +18,7 @@ export const Registration: React.FC<{ setToken: (token: string) => void }> = ({s
         <div>
             <form onSubmit={e => {
                 e.preventDefault()
-                axios.get('http://localhost:3000/registration', {params: {phone, name, password}})
+                axios.get('http://localhost:3001/registration', {params: {phone, name, password}})
                     .then(({data}) => setToken(data.token))
             }}>
                 <label>

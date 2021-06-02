@@ -15,17 +15,19 @@ export const registrationForm = async (req: Request, res: Response) => {
     res.send((await a.query('select now()')).rows)
 }
 
+export const request = async (req: GetReq<FilterOptions>, res: Response) => {
+    const userId = req.header('')
+}
+
 export const emptyTables = async (req: GetReq<FilterOptions>, res: Response) => {
-    const filterOptions = req.query
-    const response = (await db.query(
-        `select *
+    let query =
+        `select t.id, t.chair_count, t.zone, r.time reserved_time
          from "table" t
-                  left join request r
-                            on t.id = r.table_id
-                                and '${filterOptions.time}'::timestamp between
-                                   r.time - interval '2 hours' and r.time + interval '2 hours'
-         where r.id is null`
-    )).rows
+                  left join request r on t.id = r.table_id`
+    if (req.query.time) query +=
+        ` where '${req.query.time}'::timestamp not between r.time - interval '2 hours' and r.time + interval '2 hours' or
+                r.id is null`
+    const response = (await db.query(query)).rows
     res.send(response)
 }
 
