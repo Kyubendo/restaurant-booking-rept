@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios'
+import {UserAuth} from "../hooks/useUserAuth";
 
 
 type Credentials = {
@@ -9,7 +10,7 @@ type Credentials = {
     password: string,
 }
 
-export const Registration: React.FC<{ setToken: (token: string) => void }> = ({setToken}) => {
+export const Registration: React.FC<{ setAuth: (auth: UserAuth) => void }> = ({setAuth}) => {
     const [phone, setPhone] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -19,7 +20,8 @@ export const Registration: React.FC<{ setToken: (token: string) => void }> = ({s
             <form onSubmit={e => {
                 e.preventDefault()
                 axios.get('http://localhost:3001/registration', {params: {phone, name, password}})
-                    .then(({data}) => setToken(data.token))
+                    .then(({data}) => setAuth(data))
+                    .catch(e => console.log(e.response))
             }}>
                 <label>
                     <p>Имя</p>

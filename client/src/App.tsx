@@ -2,21 +2,21 @@ import React, {useState} from "react";
 import {Registration} from "./authorization/registration";
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import {Dashboard} from "./authorization/dashboard";
-import {useToken} from "./hooks/useToken";
+import {useUserAuth} from "./hooks/useUserAuth";
 import {Login} from "./authorization/login";
 import {Tables} from "./tables/tables";
 
 export const App: React.FC<{}> = () => {
-    const [token, setToken] = useToken()
+    const [userAuth, saveAuth] = useUserAuth()
 
-    if (!token) {
+    if (!userAuth.token) {
         return <BrowserRouter>
             <Switch>
                 <Route path={'/login'}>
-                    <Login token={token} setToken={setToken}/>
+                    <Login token={userAuth.token} setAuth={saveAuth}/>
                 </Route>
                 <Route path={'/'}>
-                    <Registration setToken={setToken}/>
+                    <Registration setAuth={saveAuth}/>
                 </Route>
             </Switch>
         </BrowserRouter>
@@ -28,11 +28,14 @@ export const App: React.FC<{}> = () => {
                 <Route path={'/tables'}>
                     <Tables/>
                 </Route>
+                <Route path={'/requests'}>
+
+                </Route>
                 <Route path={'/'}>
                     <Dashboard/>
                 </Route>
             </Switch>
-            <Link onClick={() => setToken('')} to={'/'}>Выйти</Link>
+            <Link onClick={() => saveAuth({...userAuth, token: ''})} to={'/'}>Выйти</Link>
         </BrowserRouter>
     </div>
 }

@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {useToken} from "../hooks/useToken";
+import {UserAuth} from "../hooks/useUserAuth";
 import {Redirect} from 'react-router-dom'
 
 export const Login: React.FC<{
     token: string | null,
-    setToken: (token: string) => void
-}> = ({token, setToken}) => {
+    setAuth: (auth: UserAuth) => void
+}> = ({token, setAuth}) => {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
 
@@ -15,7 +15,8 @@ export const Login: React.FC<{
         <form onSubmit={e => {
             e.preventDefault()
             axios.get('http://localhost:3001/login', {params: {phone, password}})
-                .then(({data}) => setToken(data.token))
+                .then(({data}) => setAuth(data))
+                .catch(e => console.log(e.response))
         }}>
             <label>
                 <p>Телефон</p>
