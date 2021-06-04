@@ -8,6 +8,6 @@ router.get('/registration', requests.registration)
 router.get('/registration/admin', requests.registrationAdmin)
 router.get('/login', requests.login)
 router.post('/request', requests.makeRequest)
-router.get('/requests', requests.requests)
-
+router.get('/requests', requests.getRequests)
+router.patch('/request', requests.changeStatus)
 export default router

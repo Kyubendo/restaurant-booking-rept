@@ -8,7 +8,10 @@ export const Dashboard: React.FC = () => {
         <h2>Dashboard</h2>
         {auth.role === 'admin'
             ? <Link to={'/requests'}>Просмотреть заказы</Link>
-            : <Link to={'/tables'}>Забронировать столик</Link>
+            : <>
+                <Link to={'/tables'}>Забронировать столик</Link>
+                <Link to={'/status'}>Проверить статус моего бронирования</Link>
+            </>
         }
     </div>
 }

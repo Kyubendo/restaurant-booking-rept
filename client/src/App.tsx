@@ -1,10 +1,11 @@
-import React, {useState} from "react";
-import {Registration} from "./authorization/registration";
+import React from "react";
+import {Registration} from "./user/registration";
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
-import {Dashboard} from "./authorization/dashboard";
+import {Dashboard} from "./main/dashboard";
 import {useUserAuth} from "./hooks/useUserAuth";
-import {Login} from "./authorization/login";
-import {Tables} from "./tables/tables";
+import {Login} from "./main/login";
+import {Tables} from "./user/tables";
+import {Requests} from "./admin/requests";
 
 export const App: React.FC<{}> = () => {
     const [userAuth, saveAuth] = useUserAuth()
@@ -29,6 +30,9 @@ export const App: React.FC<{}> = () => {
                     <Tables/>
                 </Route>
                 <Route path={'/requests'}>
+                    <Requests/>
+                </Route>
+                <Route path={'/status'}>
 
                 </Route>
                 <Route path={'/'}>

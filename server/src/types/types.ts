@@ -1,17 +1,17 @@
-export type requestStatus = 'pending' | 'processing' | 'accepted' | 'rejected'
+export type RequestStatus = 'pending' | 'processing' | 'accepted' | 'rejected'
 export type UserRole = 'client' | 'admin'
-export type zone = 'common' | 'children' | 'smoking'
+export type Zone = 'common' | 'children' | 'smoking'
 
 export type FilterOptions = {
     tableId: number,
     time: string,
-    zone?: zone,
+    zone?: Zone,
 }
 
 export type Table = {
     id: number,
     chair_count: number,
-    zone: zone,
+    zone: Zone,
     reserved_time: string,
 }
 
@@ -20,7 +20,9 @@ export type Request = {
     user_id: number,
     table_id: number,
     time: string,
-    status: requestStatus
+    status: RequestStatus,
+    user_name:string,
+    user_phone:string
 }
 
 export type UserAuth = {

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {UserAuth} from "../hooks/useUserAuth";
 import {Redirect} from 'react-router-dom'
+import {UserAuth} from "../../../server/src/types/types";
 
 export const Login: React.FC<{
     token: string | null,

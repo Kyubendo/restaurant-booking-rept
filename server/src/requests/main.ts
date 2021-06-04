@@ -15,6 +15,15 @@ const getUser = async (req: Request) => (await db.query(
      where token = '${req.header('Authorization')}'`
 )).rows[0]
 
+const adminCheck = async (req: Request, res: Response) => {
+    if ((await getUser(req))?.role !== 'admin') {
+        res.statusCode = 403
+        res.send('Only admin can do this!')
+        return false
+    }
+    return true
+}
+
 export const registrationForm = async (req: Request, res: Response) => {
     let a = getConnection()
 
@@ -39,24 +48,24 @@ export const registration = async (req: Request, res: Response) => {
         `insert into "user" (phone, name, password, role, token)
          values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'client', '${token}')`
     );
-    res.send({token, role: 'client'})
+    res.send({token, role: 'client', name: req.query.name})
 }
 
-export const requests = async (req: Request, res: Response) => {
-    if ((await getUser(req)).role) {
-        res.statusCode = 403
-        res.send('Only admin can review requests!')
-        return
-    }
-    return (await db.query(
-        `select *
-         from request`
-    )).rows
+export const getRequests = async (req: Request, res: Response) => {
+    if (!(await adminCheck(req, res))) return
+    res.send({
+        ...(await db.query(
+            `select request.*, u.name user_name, u.phone user_phone
+             from request
+                      inner join "user" u on u.id = request.user_id
+             order by request.id`
+        )).rows
+    })
 }
 
 export const login = async (req: Request, res: Response) => {
     const userData = (await db.query(
-        `select token, role
+        `select token, role, name
          from "user"
          where phone = '${req.query.phone}'
            and password = '${req.query.password}'`)).rows[0]
@@ -79,7 +88,6 @@ export const registrationAdmin = async (req: Request, res: Response) => {
 }
 
 export const makeRequest = async (req: Request, res: Response) => {
-
     const isReserved = (await db.query(
         `select r.id
          from request r
@@ -98,6 +106,34 @@ export const makeRequest = async (req: Request, res: Response) => {
         `insert into request(user_id, table_id, time, status)
          values ('${userId}', '${req.body.tableId}', '${req.body.dateTime}', 'pending')`
     )
+    res.statusCode = 204
+    res.send([])
+}
+
+export const changeStatus = async (req: Request, res: Response) => {
+    if (!(await adminCheck(req, res))) return
+    const currentStatus = (await db.query(
+        `select status
+         from request
+         where id = ${req.body.requestId}`
+    )).rows[0].status
+    const status = req.body.status
+
+    if (status === 'pending'
+        || ['rejected', 'accepted'].includes(status) && currentStatus !== 'processing'
+        || status === 'processing' && currentStatus !== 'pending') {
+        res.statusCode = 403
+        res.send('Wrong status!')
+        return
+    }
+
+    await db.query(
+        `update request
+         set status = '${req.body.status}'
+         where id = ${req.body.requestId}`
+    )
+
+
     res.statusCode = 204
     res.send([])
 }

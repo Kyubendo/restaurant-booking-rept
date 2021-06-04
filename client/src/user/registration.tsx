@@ -1,14 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios'
-import {UserAuth} from "../hooks/useUserAuth";
-
-
-type Credentials = {
-    name: string,
-    phone: string,
-    password: string,
-}
+import {UserAuth} from "../../../server/src/types/types";
 
 export const Registration: React.FC<{ setAuth: (auth: UserAuth) => void }> = ({setAuth}) => {
     const [phone, setPhone] = useState('')
