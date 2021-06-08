@@ -1,18 +1,10 @@
 import {getConnection} from "./dbConnection";
 
-export const database = () => {
+export const database =async () => {
     const db = getConnection()
-    db.query(
+    return
+    await db.query(
         `do
-        $$
-            begin
-                create type table_zone as enum ('common','children','smoking');
-            exception
-                when duplicate_object then null;
-            end
-        $$;
-        
-        do
         $$
             begin
                 create type request_status as enum ('pending', 'processing','accepted', 'rejected');
@@ -31,7 +23,7 @@ export const database = () => {
         $$;`
     )
 
-    db.query(
+    await db.query(
         `create table if not exists "user"
          (
              id       serial primary key,
@@ -42,11 +34,17 @@ export const database = () => {
              token    text               not null
          );
 
+        create table if not exists zone
+        (
+            id   serial primary key,
+            name text unique
+        );
+
         create table if not exists "table"
         (
             id          serial primary key,
-            chair_count int        not null,
-            zone        table_zone not null
+            chair_count int                      not null,
+            zone        int references zone (id) not null
         );
 
         create table if not exists request
@@ -59,4 +57,10 @@ export const database = () => {
         );`
     )
 
+    await db.query(
+        `insert into zone
+         values (1, 'common'),
+                (2, 'children')
+         on conflict do nothing`
+    )
 }
