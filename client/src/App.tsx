@@ -1,6 +1,6 @@
 import React from "react";
 import {Registration} from "./client/registration";
-import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Link, Redirect} from 'react-router-dom';
 import {Dashboard} from "./main/dashboard";
 import {useUserAuth} from "./hooks/useUserAuth";
 import {Login} from "./main/login";
@@ -14,10 +14,10 @@ export const App: React.FC<{}> = () => {
     if (!userAuth.token) {
         return <BrowserRouter>
             <Switch>
-                <Route path={'/login'}>
+                <Route path='/login'>
                     <Login token={userAuth.token} setAuth={saveAuth}/>
                 </Route>
-                <Route path={'/'}>
+                <Route path='/'>
                     <Registration setAuth={saveAuth}/>
                 </Route>
             </Switch>
@@ -27,20 +27,25 @@ export const App: React.FC<{}> = () => {
         <h1>kek</h1>
         <BrowserRouter>
             <Switch>
-                <Route path={'/tables'}>
+                <Route path='/tables'>
                     <Tables/>
                 </Route>
-                <Route path={'/requests'}>
+                <Route path='/requests'>
                     <Requests/>
                 </Route>
-                <Route path={'/status'}>
-<StatusInfo/>
+                <Route path='/status'>
+                    <StatusInfo/>
                 </Route>
-                <Route path={'/'}>
+                <Route exact path='/'>
                     <Dashboard/>
                 </Route>
+                <Route path='/'>
+                    <Redirect to='/'/>
+                </Route>
             </Switch>
-            <Link onClick={() => saveAuth({...userAuth, token: ''})} to={'/'}>Выйти</Link>
+            <Link to='/'>Главная</Link>
+            <br/>
+            <Link onClick={() => saveAuth({...userAuth, token: ''})} to='/'>Выйти</Link>
         </BrowserRouter>
     </div>
 }

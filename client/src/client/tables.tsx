@@ -74,7 +74,7 @@ export const Tables: React.FC = () => {
 
     return <div>
         <DatePicker selected={state.date} onChange={d => dispatch(new ActionDate(d as Date))}
-                    showTimeSelect dateFormat="P HH:mm" timeFormat={'HH:mm'}/>
+                    showTimeSelect dateFormat="P HH:mm" timeFormat='HH:mm'/>
         {state.tables
             ? (state.tables.length
                 ? state.tables.map(i => <TableInfo key={i.id} table={i} handleRequest={handleRequest}/>)

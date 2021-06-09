@@ -32,7 +32,7 @@ export const Registration: React.FC<{ setAuth: (auth: UserAuth) => void }> = ({s
                     <button type="submit">Зарегистрироваться</button>
                 </div>
             </form>
-            <Link to={'/login'}>Я уже зарегистрирован</Link>
+            <Link to='/login'>Я уже зарегистрирован</Link>
         </div>
     )
 }

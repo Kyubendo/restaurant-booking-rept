@@ -10,7 +10,7 @@ export const Login: React.FC<{
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
 
-    if (token) return <Redirect to={'/'}/>
+    if (token) return <Redirect to='/'/>
     return (
         <form onSubmit={e => {
             e.preventDefault()
