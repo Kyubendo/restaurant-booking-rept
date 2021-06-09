@@ -10,9 +10,15 @@ export type FilterOptions = {
 
 export type Table = {
     id: number,
-    chair_count: number,
+    max_chair_count: number,
     zone: Zone,
     reserved_time: string,
+}
+
+export type TablesStatusInfo = {
+    id: number,
+    time: string,
+    status: RequestStatus
 }
 
 export type Request = {
@@ -21,8 +27,8 @@ export type Request = {
     table_id: number,
     time: string,
     status: RequestStatus,
-    user_name:string,
-    user_phone:string
+    user_name: string,
+    user_phone: string
 }
 
 export type UserAuth = {

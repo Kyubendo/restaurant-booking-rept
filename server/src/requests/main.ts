@@ -1,53 +1,40 @@
 import {getConnection} from "../dbConnection";
 import {Response, Request} from "express";
 import {FilterOptions} from "../types/types";
-import * as crypto from 'crypto'
+import {adminCheck, createToken, getClient} from "../utils/requests";
 
 type GetReq<T> = Request<{}, {}, {}, T>
 
 const db = getConnection()
 
-const createToken = (value: string) => crypto.createHash('sha1').update(value).digest('hex');
-
-const getUser = async (req: Request) => (await db.query(
-    `select *
-     from "user"
-     where token = '${req.header('Authorization')}'`
-)).rows[0]
-
-const adminCheck = async (req: Request, res: Response) => {
-    if ((await getUser(req))?.role !== 'admin') {
-        res.statusCode = 403
-        res.send('Only admin can do this!')
-        return false
-    }
-    return true
-}
-
-export const registrationForm = async (req: Request, res: Response) => {
-    let a = getConnection()
-
-    res.send((await a.query('select now()')).rows)
-}
-
 export const emptyTables = async (req: GetReq<FilterOptions>, res: Response) => {
     let query =
-        `select t.id, t.chair_count, t.zone, r.time reserved_time
+        `with reserved_tables as (
+            select r.table_id
+            from request r
+            where '${req.query.time}'::timestamp between r.time - interval '2 hours' and r.time + interval '2 hours'
+        )
+         select t.id, z.max_chair_count, z.name as zone, r.time reserved_time
          from "table" t
-                  left join request r on t.id = r.table_id`
-    if (req.query.time) query +=
-        ` where '${req.query.time}'::timestamp not between r.time - interval '2 hours' and r.time + interval '2 hours' or
-                r.id is null`
+                  inner join zone z on z.id = t.zone_id
+                  left join request r on t.id = r.table_id
+                  left join reserved_tables rt on rt.table_id = r.table_id
+         where rt is null`
     const response = (await db.query(query)).rows
     res.send(response)
 }
 
 export const registration = async (req: Request, res: Response) => {
     const token = createToken(`${req.query.phone}${req.query.password}`)
+    const userId = (await db.query(
+        `insert into "user" (phone, name, password, token)
+         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', '${token}')
+         returning id`
+    )).rows[0].id;
     await db.query(
-        `insert into "user" (phone, name, password, role, token)
-         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'client', '${token}')`
-    );
+        `insert into client
+         values (${userId})`
+    )
     res.send({token, role: 'client', name: req.query.name})
 }
 
@@ -57,7 +44,7 @@ export const getRequests = async (req: Request, res: Response) => {
         ...(await db.query(
             `select request.*, u.name user_name, u.phone user_phone
              from request
-                      inner join "user" u on u.id = request.user_id
+                      inner join "user" u on u.id = request.client_id
              order by request.id`
         )).rows
     })
@@ -65,27 +52,29 @@ export const getRequests = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
     const userData = (await db.query(
-        `select token, role, name
-         from "user"
+        `select token, name, case u.id when c.user_id then 'client' when a.user_id then 'admin' end as role
+         from "user" u
+                  left join admin a on u.id = a.user_id
+                  left join client c on u.id = c.user_id
          where phone = '${req.query.phone}'
            and password = '${req.query.password}'`)).rows[0]
     res.send({...userData})
 }
 
-
-export const registrationAdmin = async (req: Request, res: Response) => {
-    if (req.query.secret !== 'secret') {
-        res.statusCode = 403
-        res.send('Wrong secret key!')
-        return
-    }
-    const token = createToken(`${req.query.phone}${req.query.password}`)
-    await db.query(
-        `insert into "user" (phone, name, password, role, token)
-         values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'admin', '${token}')`
-    );
-    res.send({token})
-}
+//
+// export const registrationAdmin = async (req: Request, res: Response) => {
+//     if (req.query.secret !== 'secret') {
+//         res.statusCode = 403
+//         res.send('Wrong secret key!')
+//         return
+//     }
+//     const token = createToken(`${req.query.phone}${req.query.password}`)
+//     await db.query(
+//         `insert into "user" (phone, name, password, role, token)
+//          values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'admin', '${token}')`
+//     );
+//     res.send({token})
+// }
 
 export const makeRequest = async (req: Request, res: Response) => {
     const isReserved = (await db.query(
@@ -100,18 +89,19 @@ export const makeRequest = async (req: Request, res: Response) => {
         res.send('This table is already reserved!')
         return
     }
-    const userId = (await getUser(req)).id
+    const clientId = (await getClient(req)).user_id
 
     await db.query(
-        `insert into request(user_id, table_id, time, status)
-         values ('${userId}', '${req.body.tableId}', '${req.body.dateTime}', 'pending')`
+        `insert into request(client_id, table_id, time, status)
+         values ('${clientId}', '${req.body.tableId}', '${req.body.dateTime}', 'pending')`
     )
     res.statusCode = 204
     res.send([])
 }
 
 export const changeStatus = async (req: Request, res: Response) => {
-    if (!(await adminCheck(req, res))) return
+    const admin = await adminCheck(req, res)
+    if (!admin) return
     const currentStatus = (await db.query(
         `select status
          from request
@@ -129,11 +119,20 @@ export const changeStatus = async (req: Request, res: Response) => {
 
     await db.query(
         `update request
-         set status = '${req.body.status}'
+         set status   = '${req.body.status}',
+             admin_id = ${admin.user_id}
          where id = ${req.body.requestId}`
     )
 
-
     res.statusCode = 204
     res.send([])
+}
+
+export const getStatuses = async (req: Request, res: Response) => {
+    const client = await getClient(req)
+    res.send((await db.query(
+        `select table_id as id, time, status
+         from request
+         where client_id = ${client.user_id}`
+    )).rows)
 }

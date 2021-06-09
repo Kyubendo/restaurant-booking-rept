@@ -5,9 +5,10 @@ const router = express.Router();
 
 router.get('/tables', requests.emptyTables)
 router.get('/registration', requests.registration)
-router.get('/registration/admin', requests.registrationAdmin)
+//router.get('/registration/admin', requests.registrationAdmin)
 router.get('/login', requests.login)
 router.post('/request', requests.makeRequest)
 router.get('/requests', requests.getRequests)
 router.patch('/request', requests.changeStatus)
+router.get('/statuses', requests.getStatuses)
 export default router

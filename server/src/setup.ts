@@ -1,6 +1,7 @@
 import {getConnection} from "./dbConnection";
 
 export const database = async () => {
+    return
     const db = getConnection()
 
     await db.query(

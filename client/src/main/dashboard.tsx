@@ -10,6 +10,7 @@ export const Dashboard: React.FC = () => {
             ? <Link to={'/requests'}>Просмотреть заказы</Link>
             : <>
                 <Link to={'/tables'}>Забронировать столик</Link>
+                <br/>
                 <Link to={'/status'}>Проверить статус моего бронирования</Link>
             </>
         }
