@@ -1,31 +1,20 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
-import {useUserAuth} from "../hooks/useUserAuth";
-import {TablesStatusInfo} from "../../../server/src/types/types";
+import React from "react";
 import dayjs from "dayjs";
 import {requestStatusNames} from "../utils/nameMap";
+import {TablesStatusInfo} from "../../../server/src/types/types";
 
-export const StatusInfo: React.FC = () => {
-    const [statusesInfo, setStatusesInfo] = useState<TablesStatusInfo[] | null>(null)
-    const [auth] = useUserAuth()
-
-    useEffect(() => {
-        axios.get('http://localhost:3001/statuses', {headers: {Authorization: auth.token}})
-            .then(({data}) => setStatusesInfo(data))
-            .catch(e => console.log(e.response))
-    }, [])
-
-    return <div>
-        {statusesInfo
-            ? (statusesInfo.length
-                ? statusesInfo.map(i =>
-                    <>
-                        <h3>Столик №{i.id}</h3>
-                        <p>Время — {dayjs(i.time).format('DD.MM.YYYY HH:mm')}</p>
-                        <p>Статус — {requestStatusNames[i.status]}</p>
-                        <br/>
-                    </>)
-                : <p>У вас нет акивных заказов. Вы можете сделать заказ на <a href='/tables'>этой старнице</a></p>)
-            : 'Загрузка...'}
-    </div>
-}
+export const StatusInfo: React.FC<{ tableStatusInfo: TablesStatusInfo, handleCancel: (requestId: number) => void }> =
+    ({tableStatusInfo, handleCancel}) => {
+        return <div>
+            <form onSubmit={e => {
+                e.preventDefault()
+                handleCancel(tableStatusInfo.id)
+            }}>
+                <h3>Столик №{tableStatusInfo.request_id}</h3>
+                <p>Время — {dayjs(tableStatusInfo.time).format('DD.MM.YYYY HH:mm')}</p>
+                <p>Статус — {requestStatusNames[tableStatusInfo.status]}</p>
+                {['pending', 'processing'].includes(tableStatusInfo.status) && <button type="submit">Отменить</button>}
+                <br/>
+            </form>
+        </div>
+    }

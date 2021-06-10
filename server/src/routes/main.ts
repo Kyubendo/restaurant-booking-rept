@@ -10,5 +10,6 @@ router.get('/login', requests.login)
 router.post('/request', requests.makeRequest)
 router.get('/requests', requests.getRequests)
 router.patch('/request', requests.changeStatus)
+router.patch('/cancel-request', requests.cancelRequest)
 router.get('/statuses', requests.getStatuses)
 export default router

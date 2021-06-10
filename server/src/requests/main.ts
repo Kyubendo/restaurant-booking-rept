@@ -61,6 +61,18 @@ export const login = async (req: Request, res: Response) => {
     res.send({...userData})
 }
 
+export const cancelRequest = async (req: Request, res: Response) => {
+    const client = await getClient(req)
+    await db.query(
+        `update request
+         set status='canceled'
+         where id = ${req.body.requestId}
+           and client_id = ${client.user_id}`
+    )
+    res.status(205)
+    res.send([])
+}
+
 //
 // export const registrationAdmin = async (req: Request, res: Response) => {
 //     if (req.query.secret !== 'secret') {
@@ -131,7 +143,7 @@ export const changeStatus = async (req: Request, res: Response) => {
 export const getStatuses = async (req: Request, res: Response) => {
     const client = await getClient(req)
     res.send((await db.query(
-        `select table_id as id, time, status
+        `select request.id as request_id, table_id as id, time, status
          from request
          where client_id = ${client.user_id}`
     )).rows)

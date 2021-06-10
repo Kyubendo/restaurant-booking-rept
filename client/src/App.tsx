@@ -6,7 +6,8 @@ import {useUserAuth} from "./hooks/useUserAuth";
 import {Login} from "./main/login";
 import {Tables} from "./client/tables";
 import {Requests} from "./admin/requests";
-import {StatusInfo} from "./client/statusInfo";
+import {StatusesInfo} from "./client/statusesInfo";
+import './App.css'
 
 export const App: React.FC<{}> = () => {
     const [userAuth, saveAuth] = useUserAuth()
@@ -34,7 +35,7 @@ export const App: React.FC<{}> = () => {
                     <Requests/>
                 </Route>
                 <Route path='/status'>
-                    <StatusInfo/>
+                    <StatusesInfo/>
                 </Route>
                 <Route exact path='/'>
                     <Dashboard/>

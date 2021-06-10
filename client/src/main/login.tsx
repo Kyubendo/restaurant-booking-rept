@@ -12,23 +12,25 @@ export const Login: React.FC<{
 
     if (token) return <Redirect to='/'/>
     return (
-        <form onSubmit={e => {
-            e.preventDefault()
-            axios.get('http://localhost:3001/login', {params: {phone, password}})
-                .then(({data}) => setAuth(data))
-                .catch(e => console.log(e.response))
-        }}>
-            <label>
-                <p>Телефон</p>
-                <input value={phone} type="text" onChange={e => setPhone(e.target.value)}/>
-            </label>
-            <label>
-                <p>Пароль</p>
-                <input value={password} type="password" onChange={e => setPassword(e.target.value)}/>
-            </label>
-            <div>
-                <button type="submit">Войти</button>
-            </div>
-        </form>
+        <div>
+            <form onSubmit={e => {
+                e.preventDefault()
+                axios.get('http://localhost:3001/login', {params: {phone, password}})
+                    .then(({data}) => setAuth(data))
+                    .catch(e => console.log(e.response))
+            }}>
+                <label>
+                    <p>Телефон</p>
+                    <input value={phone} type="text" onChange={e => setPhone(e.target.value)}/>
+                </label>
+                <label>
+                    <p>Пароль</p>
+                    <input value={password} type="password" onChange={e => setPassword(e.target.value)}/>
+                </label>
+                <div>
+                    <button type="submit">Войти</button>
+                </div>
+            </form>
+        </div>
     )
 }

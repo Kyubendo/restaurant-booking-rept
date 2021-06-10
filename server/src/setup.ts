@@ -1,14 +1,13 @@
 import {getConnection} from "./dbConnection";
 
 export const database = async () => {
-    return
     const db = getConnection()
 
     await db.query(
         `do
         $$
             begin
-                create type request_status as enum ('pending', 'processing','accepted', 'rejected');
+                create type request_status as enum ('pending', 'processing','accepted', 'rejected', 'canceled');
             exception
                 when duplicate_object then null;
             end

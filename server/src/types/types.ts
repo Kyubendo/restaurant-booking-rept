@@ -1,4 +1,4 @@
-export type RequestStatus = 'pending' | 'processing' | 'accepted' | 'rejected'
+export type RequestStatus = 'pending' | 'processing' | 'accepted' | 'rejected' | 'canceled'
 export type UserRole = 'client' | 'admin'
 export type Zone = 'common' | 'children' | 'smoking'
 
@@ -17,6 +17,7 @@ export type Table = {
 
 export type TablesStatusInfo = {
     id: number,
+    request_id:number,
     time: string,
     status: RequestStatus
 }

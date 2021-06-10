@@ -9,4 +9,5 @@ export const requestStatusNames = {
     'processing': 'В обработке',
     'accepted': 'Принят',
     'rejected': 'Отклонён',
+    'canceled': 'Отменён'
 }
