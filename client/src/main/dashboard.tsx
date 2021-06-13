@@ -5,9 +5,12 @@ import {useUserAuth} from "../hooks/useUserAuth";
 export const Dashboard: React.FC = () => {
     const [auth] = useUserAuth()
     return <div>
-        <h2>Dashboard</h2>
+        <h2>Главная страница</h2>
         {auth.role === 'admin'
-            ? <Link to='/requests'>Просмотреть заказы</Link>
+            ? <>
+                <Link to='/requests'>Просмотреть заказы</Link>
+                <Link to='/'>Згенерировать отчёт по текущим заказам</Link>
+            </>
             : <>
                 <Link to='/tables'>Забронировать столик</Link>
                 <br/>

@@ -25,7 +25,7 @@ export const App: React.FC<{}> = () => {
         </BrowserRouter>
     }
     return <div>
-        <h1>kek</h1>
+        <h1>Kamigakari</h1>
         <BrowserRouter>
             <Switch>
                 <Route path='/tables'>
@@ -44,7 +44,7 @@ export const App: React.FC<{}> = () => {
                     <Redirect to='/'/>
                 </Route>
             </Switch>
-            <Link to='/'>Главная</Link>
+            {window.location.href === '/' && <Link to='/'>Главная</Link>}
             <br/>
             <Link onClick={() => saveAuth({...userAuth, token: ''})} to='/'>Выйти</Link>
         </BrowserRouter>
