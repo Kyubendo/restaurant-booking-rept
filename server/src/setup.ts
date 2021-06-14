@@ -32,20 +32,21 @@ export const database = async () => {
 
         create table if not exists admin
         (
-            user_id           int references "user" (id) primary key,
-            department_number int not null 
+            user_id    int references "user" (id) primary key,
+            surname    text not null,
+            patronymic text not null
         );
 
         create table if not exists zone
         (
             id              serial primary key,
-            name            text unique not null ,
-            max_chair_count int not null
+            name            text unique not null,
+            max_chair_count int         not null
         );
 
         create table if not exists "table"
         (
-            id   serial primary key,
+            id      serial primary key,
             zone_id int references zone (id) not null
         );
 
