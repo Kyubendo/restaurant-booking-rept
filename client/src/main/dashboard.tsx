@@ -9,7 +9,7 @@ export const Dashboard: React.FC = () => {
         {auth.role === 'admin'
             ? <>
                 <Link to='/requests'>Просмотреть заказы</Link>
-                <Link to='/'>Згенерировать отчёт по текущим заказам</Link>
+                <Link to='/report' target="_blank">Згенерировать отчёт по текущим заказам</Link>
             </>
             : <>
                 <Link to='/tables'>Забронировать столик</Link>

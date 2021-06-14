@@ -12,4 +12,5 @@ router.get('/requests', requests.getRequests)
 router.patch('/request', requests.changeStatus)
 router.patch('/cancel-request', requests.cancelRequest)
 router.get('/statuses', requests.getStatuses)
+router.get('/report', requests.generateReport)
 export default router

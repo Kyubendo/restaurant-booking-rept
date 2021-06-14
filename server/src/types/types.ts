@@ -17,7 +17,7 @@ export type Table = {
 
 export type TablesStatusInfo = {
     id: number,
-    request_id:number,
+    request_id: number,
     time: string,
     status: RequestStatus
 }
@@ -36,4 +36,12 @@ export type UserAuth = {
     token: string
     role: UserRole
     name: string
+}
+
+export type ReportRow = {
+    table_id: number,
+    zone: Zone,
+    time: string,
+    name: string,
+    max_chair_count: number,
 }

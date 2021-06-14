@@ -8,6 +8,7 @@ import {Tables} from "./client/tables";
 import {Requests} from "./admin/requests";
 import {StatusesInfo} from "./client/statusesInfo";
 import './App.css'
+import {Report} from "./admin/report";
 
 export const App: React.FC<{}> = () => {
     const [userAuth, saveAuth] = useUserAuth()
@@ -37,6 +38,9 @@ export const App: React.FC<{}> = () => {
                 <Route path='/status'>
                     <StatusesInfo/>
                 </Route>
+                <Route path='/report'>
+                    <Report/>
+                </Route>
                 <Route exact path='/'>
                     <Dashboard/>
                 </Route>
@@ -46,7 +50,8 @@ export const App: React.FC<{}> = () => {
             </Switch>
             {window.location.href === '/' && <Link to='/'>Главная</Link>}
             <br/>
-            <Link onClick={() => saveAuth({...userAuth, token: ''})} to='/'>Выйти</Link>
+            {window.location.href === '/report' &&
+            <Link onClick={() => saveAuth({...userAuth, token: ''})} to='/'>Выйти</Link>}
         </BrowserRouter>
     </div>
 }

@@ -1,8 +1,19 @@
 div {
     margin: 15px;
 }
-button, a{
+
+button, a {
     margin-top: 5px;
     display: block;
 }
 
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 20px;
+}
+td{
+    text-align: center;
+}

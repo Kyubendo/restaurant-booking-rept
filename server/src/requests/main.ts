@@ -73,20 +73,20 @@ export const cancelRequest = async (req: Request, res: Response) => {
     res.send([])
 }
 
-//
-// export const registrationAdmin = async (req: Request, res: Response) => {
-//     if (req.query.secret !== 'secret') {
-//         res.statusCode = 403
-//         res.send('Wrong secret key!')
-//         return
-//     }
-//     const token = createToken(`${req.query.phone}${req.query.password}`)
-//     await db.query(
-//         `insert into "user" (phone, name, password, role, token)
-//          values ('${req.query.phone}', '${req.query.name}', '${req.query.password}', 'admin', '${token}')`
-//     );
-//     res.send({token})
-// }
+export const generateReport = async (req: Request, res: Response) => {
+    const admin = await adminCheck(req, res)
+    if (!admin) return
+
+    res.send((await db.query(
+        `select t.id as table_id, z.name as zone, r.time, u.name, z.max_chair_count
+         from request r
+                  inner join "table" t on r.table_id = t.id
+                  inner join zone z on z.id = t.zone_id
+                  inner join "user" u on u.id = r.client_id
+         where r.time > current_timestamp
+           and r.status = 'accepted'`
+    )).rows)
+}
 
 export const makeRequest = async (req: Request, res: Response) => {
     const isReserved = (await db.query(
